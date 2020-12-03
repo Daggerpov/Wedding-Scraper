@@ -2,7 +2,7 @@ import selenium
 #from selenium.webdriver.common.keys import Keys
 
 def navigate_to(city, category):
-
+    print(city, category)
 
 
 
@@ -22,6 +22,7 @@ def main():
     #initializing module
     root = tk.Tk()
     
+    global app
     #setting the current screen to start menu
     app = main_screen(root)
     
@@ -78,33 +79,82 @@ class main_screen():
         self.style = ttk.Style(self.master)
         self.style.configure("Placeholder.TEntry", foreground="#d5d5d5")
 
+        options = [
+            "Reception Venues", 
+            "Wedding Photographers",
+            "Videographers",
+            "Bridal Salons",
+            "Beauty",
+            "DJs",
+            "Wedding Bands",
+            "Florists",
+            "Wedding Planners",
+            "Hotel Room Blocks", 
+            "Jewelers",
+            "Wedding Cakes",
+            "Accessories",
+            "Alterations & Preservation",
+            "Bar Services & Beverages",
+            "Bed and Breakfasts",
+            "Boudoir Photographers",
+            "Calligraphers",
+            "Caterers",
+            "Ceremony Accessories",
+            "Ceremony Venues", 
+            "Dance Lessons",
+            "Decor",
+            "Desserts",
+            "Ensembles & Soloists",
+            "Favors & Gifts",
+            "Fitness",
+            "Invitations & Paper Goods",
+            "Lighting",
+            "Menswear",
+            "Newlywed Services",
+            "Officiants & Premarital Counseling",
+            "Photo Booths",
+            "Registry Services",
+            "Rehearsal Dinners, Bridal Showers & Parties",
+            "Rentals",
+            "Service Staff",
+            "Technology",
+            "Transportation",
+            "Travel Specialists",
+            "Vacation Homes & Villas",
+            "Variety Acts",
+            "Wedding Designers",
+            "Wedding Jewelry"
+        ]
 
+        current_category = tk.StringVar(self.master)
+        current_category.set(options[0])
 
-
-        self.username_frame = tk.Frame(self.master, bg="#99aab5", bd=10)
-        self.username_frame.place(relx=0.5, rely=0.1, relwidth=0.75, relheight=0.25, anchor='n')
+        self.city_frame = tk.Frame(self.master, bg="#99aab5", bd=10)
+        self.city_frame.place(relx=0.5, rely=0.05, relwidth=0.75, relheight=0.1, anchor='n')
         
-        self.password_frame = tk.Frame(self.master, bg="#99aab5", bd=10)
-        self.password_frame.place(relx=0.5, rely=0.40, relwidth=0.75, relheight=0.25, anchor='n')
+        self.category_frame = tk.Frame(self.master, bg="#99aab5", bd=10)
+        self.category_frame.place(relx=0.5, rely=0.2, relwidth=0.75, relheight=0.1, anchor='n')
 
         self.submit_frame = tk.Frame(self.master, bg="#7289da", bd=10)
-        self.submit_frame.place(relx=0.5, rely=0.7, relwidth=0.3, relheight=0.15, anchor='n')
-        
+        self.submit_frame.place(relx=0.5, rely=0.85, relwidth=0.15, relheight=0.1, anchor='n')
         
 
-        global username_entry 
-        city = PlaceholderEntry(self.username_frame, "City", "", font=('Courier', 100))
-        city.place(relheight=1, relwidth=1)
+        global city_entry
+        city_entry = PlaceholderEntry(self.city_frame, "City, State", "", font=('Courier', 28))
+        city_entry.place(relheight=1, relwidth=1)
 
-        '''global category
-        category = PlaceholderEntry(self.password_frame, "Password", 'password', font=('Courier', 100))
-        category.place(relheight=1, relwidth=1)'''
+        
+        global category_entry
+        category_entry = tk.OptionMenu(self.category_frame, current_category, *options)
+        category_entry.config(width=90, font=('Courier', 28))
+        category_entry.place(relheight=1, relwidth=1)
+
         
 
         #submission button will redirect the user over to the instagram scraping screen upon being pressed
-        self.submit = tk.Button(self.submit_frame, text="Login", font=('Courier', 60), bg='white',
-            command=lambda: navigate_to(city, category))
-        self.submit.place(relheight=1, relwidth=1)
+        submit = tk.Button(self.submit_frame, text="Search", font=('Courier', 28), bg='white',
+            command=lambda: navigate_to(str(city_entry.get()), category_entry['text']))
+        submit.place(relheight=1, relwidth=1)
 
 if __name__ == '__main__':
     main()
