@@ -1,8 +1,55 @@
-import selenium
-#from selenium.webdriver.common.keys import Keys
+from selenium import webdriver
 
-def navigate_to(city, category):
-    print(city, category)
+from time import sleep
+from random import randint
+
+import tkinter as tk
+from tkinter import ttk 
+
+def randomize_sleep(min, max):
+    return randint(min*100, max*100) / 100
+
+def navigate_to(city_state, category):
+    PATH = "/home/daggerpov/Documents/GitHub/Wedding-Scraper/chromedriver"
+    driver = webdriver.Chrome(PATH)
+    
+    driver.get("https://www.theknot.com/marketplace")
+    sleep(randomize_sleep(1,3))
+    
+    #category selection
+    category_select_button = driver.find_element_by_xpath(
+        '//*[@id="search"]/div[2]/div/div[3]/div/button'
+    )
+    category_select_button.click()
+    sleep(randomize_sleep(1,3))
+
+    category_selections = driver.find_elements_by_class_name(
+        "iconContainer--c9323"
+    )
+    select_category = options.index(category)
+    category_selections[select_category].click()
+    sleep(randomize_sleep(3, 4))
+    
+    #city, state selection
+    city_state_label = driver.find_element_by_xpath(
+        '//input[@class="input--13524 field-base--4deb4 body1--fd844 base--04622 ease-out--4b40a input-with-animated-label--01fe4 is-neutral--2a4f7"]'
+    )
+    city_state_label.send_keys(city_state)
+    sleep(randomize_sleep(1,2))
+
+    select_city_state = driver.find_element_by_xpath(
+        '//li[@class="item--8670e item-base--4a1f5"]'
+    )
+    select_city_state.click()
+    sleep(randomize_sleep(1, 2))
+
+    search_button = driver.find_element_by_xpath(
+        '//button[@class="btn--62697 btn-transitions--893d4 md--97c77 buttonM--26f25 primary--52a11 searchBtn--4cca7"]'
+    )
+    search_button.click()
+    sleep(randomize_sleep(2, 4))
+    
+    driver.quit()
 
 
 
@@ -12,8 +59,6 @@ def navigate_to(city, category):
 
 #just GUI stuff past this point, has nothing to do with scraping
 
-import tkinter as tk
-from tkinter import ttk 
 
 HEIGHT = 768
 WIDTH = 1366
@@ -79,6 +124,8 @@ class main_screen():
         self.style = ttk.Style(self.master)
         self.style.configure("Placeholder.TEntry", foreground="#d5d5d5")
 
+        global options
+
         options = [
             "Reception Venues", 
             "Wedding Photographers",
@@ -129,8 +176,8 @@ class main_screen():
         current_category = tk.StringVar(self.master)
         current_category.set(options[0])
 
-        self.city_frame = tk.Frame(self.master, bg="#99aab5", bd=10)
-        self.city_frame.place(relx=0.5, rely=0.05, relwidth=0.75, relheight=0.1, anchor='n')
+        self.city_state_frame = tk.Frame(self.master, bg="#99aab5", bd=10)
+        self.city_state_frame.place(relx=0.5, rely=0.05, relwidth=0.75, relheight=0.1, anchor='n')
         
         self.category_frame = tk.Frame(self.master, bg="#99aab5", bd=10)
         self.category_frame.place(relx=0.5, rely=0.2, relwidth=0.75, relheight=0.1, anchor='n')
@@ -139,9 +186,9 @@ class main_screen():
         self.submit_frame.place(relx=0.5, rely=0.85, relwidth=0.15, relheight=0.1, anchor='n')
         
 
-        global city_entry
-        city_entry = PlaceholderEntry(self.city_frame, "City, State", "", font=('Courier', 28))
-        city_entry.place(relheight=1, relwidth=1)
+        global city_state_entry
+        city_state_entry = PlaceholderEntry(self.city_state_frame, "City, State", "", font=('Courier', 28))
+        city_state_entry.place(relheight=1, relwidth=1)
 
         
         global category_entry
@@ -153,7 +200,7 @@ class main_screen():
 
         #submission button will redirect the user over to the instagram scraping screen upon being pressed
         submit = tk.Button(self.submit_frame, text="Search", font=('Courier', 28), bg='white',
-            command=lambda: navigate_to(str(city_entry.get()), category_entry['text']))
+            command=lambda: navigate_to(str(city_state_entry.get()), category_entry['text']))
         submit.place(relheight=1, relwidth=1)
 
 if __name__ == '__main__':
