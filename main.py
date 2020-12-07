@@ -7,47 +7,62 @@ import tkinter as tk
 from tkinter import ttk 
 
 def randomize_sleep(min, max):
-    return randint(min*100, max*100) / 100
+    sleep(randint(min*100, max*100) / 100)
 
 def navigate_to(city_state, category):
     PATH = "/home/daggerpov/Documents/GitHub/Wedding-Scraper/chromedriver"
     driver = webdriver.Chrome(PATH)
     
     driver.get("https://www.theknot.com/marketplace")
-    sleep(randomize_sleep(1,3))
+    randomize_sleep(1,3)
     
     #category selection
     category_select_button = driver.find_element_by_xpath(
         '//*[@id="search"]/div[2]/div/div[3]/div/button'
     )
     category_select_button.click()
-    sleep(randomize_sleep(1,3))
+    randomize_sleep(1,2)
 
     category_selections = driver.find_elements_by_class_name(
         "iconContainer--c9323"
     )
     select_category = options.index(category)
     category_selections[select_category].click()
-    sleep(randomize_sleep(3, 4))
+    randomize_sleep(1, 2)
     
     #city, state selection
     city_state_label = driver.find_element_by_xpath(
         '//input[@class="input--13524 field-base--4deb4 body1--fd844 base--04622 ease-out--4b40a input-with-animated-label--01fe4 is-neutral--2a4f7"]'
     )
     city_state_label.send_keys(city_state)
-    sleep(randomize_sleep(1,2))
+    randomize_sleep(1,2)
 
     select_city_state = driver.find_element_by_xpath(
         '//li[@class="item--8670e item-base--4a1f5"]'
     )
     select_city_state.click()
-    sleep(randomize_sleep(1, 2))
+    randomize_sleep(1, 2)
 
     search_button = driver.find_element_by_xpath(
         '//button[@class="btn--62697 btn-transitions--893d4 md--97c77 buttonM--26f25 primary--52a11 searchBtn--4cca7"]'
     )
     search_button.click()
-    sleep(randomize_sleep(2, 4))
+    randomize_sleep(0.5, 1)
+
+    try:
+        vendors = driver.find_elements_by_xpath('//*[@class="click-container--48a45"]')
+        print("everything's fine x 1")
+    except:
+        exit()
+
+    randomize_sleep(1, 2)
+    for vendor in vendors:
+        print("everything's fine x 2")
+        vendor.click()
+        randomize_sleep(4, 5)
+    
+
+    
     
     driver.quit()
 
