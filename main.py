@@ -1,4 +1,7 @@
 from selenium import webdriver
+from bs4 import BeautifulSoup 
+import requests 
+import csv 
 
 from time import sleep
 from random import randint
@@ -15,6 +18,7 @@ def navigate_to(city_state, category):
     
     driver.get("https://www.theknot.com/marketplace")
     randomize_sleep(1,3)
+    
     
     #category selection
     category_select_button = driver.find_element_by_xpath(
@@ -57,8 +61,21 @@ def navigate_to(city_state, category):
 
     randomize_sleep(1, 2)
     for vendor in vendors:
-        print(vendor.get_attribute('href'))
-        randomize_sleep(4, 5)
+        vendor.click()
+        randomize_sleep(10, 11)
+        '''link = vendor.get_attribute('href')
+
+        header = {"From": "Daniel Agapov <danielagapov1@gmail.com>", "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"
+        }
+
+        response = requests.get(link, headers=header)
+        if response.status_code != 200: 
+            print("Failed to get HTML:", response.status_code, response.reason)
+            exit()
+        
+        soup = BeautifulSoup(response.text, "html5lib")
+
+        randomize_sleep(4, 5)'''
     
 
     
