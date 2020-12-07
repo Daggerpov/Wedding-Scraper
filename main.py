@@ -51,14 +51,13 @@ def navigate_to(city_state, category):
 
     try:
         vendors = driver.find_elements_by_xpath('//*[@class="click-container--48a45"]')
-        print("everything's fine x 1")
+        randomize_sleep(1, 2)
     except:
         exit()
 
     randomize_sleep(1, 2)
     for vendor in vendors:
-        print("everything's fine x 2")
-        vendor.click()
+        print(vendor.get_attribute('href'))
         randomize_sleep(4, 5)
     
 
