@@ -13,7 +13,7 @@ def randomize_sleep(min, max):
     sleep(randint(min*100, max*100) / 100)
 
 def navigate_to(city_state, category):
-    PATH = "/home/daggerpov/Documents/GitHub/Wedding-Scraper/chromedriver"
+    PATH = "/Users/daggerpov/Documents/GitHub/Wedding-Scraper/chromedriver"
     driver = webdriver.Chrome(PATH)
     
     driver.get("https://www.theknot.com/marketplace")
@@ -76,11 +76,15 @@ def navigate_to(city_state, category):
         soup = BeautifulSoup(response.text, "html5lib")
 
         randomize_sleep(4, 5)'''
+
+        #find address
+        address = driver.find_element_by_xpath('//p[@class="address--2d91e body1--fd844"]').text
+        
+
     
 
     
     
-    driver.quit()
 
 
 
