@@ -80,7 +80,17 @@ def navigate_to(city_state, category):
         #find address
         address = driver.find_element_by_xpath('//p[@class="address--2d91e body1--fd844"]').text
         
+        #find website
+        website = driver.find_element_by_css_selector("#with-pricing-range > div > div.website-call-buttons--1ef6e > div:nth-child(1) > span > a").get_attribute('href')
 
+        #find phone number
+        phone_number = driver.find_element_by_css_selector('#navContact > div > div > div.order-md-1--7a6e1.col-sm-12--f2343.col-md-9--a303f > div.contact-info--37f24.body1--fd844')
+        phone_number = phone_number.find_elements_by_tag_name('span').text
+        for i in phone_number:
+            if ',' not in i:
+                phone_number = i
+
+        print(address, website, phone_number)
     
 
     
