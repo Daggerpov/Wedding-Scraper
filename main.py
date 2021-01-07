@@ -61,9 +61,9 @@ def navigate_to(city_state, category):
 
     randomize_sleep(1, 2)
     for vendor in vendors:
-        vendor.click()
+        #vendor.click()
         randomize_sleep(10, 11)
-        '''link = vendor.get_attribute('href')
+        link = vendor.get_attribute('href')
 
         header = {"From": "Daniel Agapov <danielagapov1@gmail.com>", "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"
         }
@@ -75,11 +75,13 @@ def navigate_to(city_state, category):
         
         soup = BeautifulSoup(response.text, "html5lib")
 
-        randomize_sleep(4, 5)'''
+        print(soup)
+
+        randomize_sleep(4, 5)
 
         #find address
         address = driver.find_element_by_xpath('//p[@class="address--2d91e body1--fd844"]').text
-        
+
         #find website
         website = driver.find_element_by_css_selector("#with-pricing-range > div > div.website-call-buttons--1ef6e > div:nth-child(1) > span > a").get_attribute('href')
 
